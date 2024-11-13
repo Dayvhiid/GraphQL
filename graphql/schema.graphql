@@ -1,0 +1,30 @@
+type Query {
+   hello: String! @field( resolver: "App\\GraphQL\\Queries\\Hello@resolve")
+   users: [User!]! @all 
+}
+
+
+type Mutation{
+   createUser(name: String!, email: String!, password: String!): User
+    @create(model: "App\\Models\\User")
+}
+
+
+type Mutation{
+   updateUser(id:ID!, email:String!, name:String!): User @update(model: "App\\Models\\User")
+}
+
+type Mutation {
+    deleteUser(id: ID!): User @field(resolver: "App\\GraphQL\\Mutations\\UserMutations@deleteUser") @guard(with: ["sanctum"])
+}
+
+
+
+type User {
+   id: ID!
+   name: String!
+   email: String!
+   password: String!
+}
+
+
